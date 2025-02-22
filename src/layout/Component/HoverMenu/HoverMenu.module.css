@@ -1,0 +1,46 @@
+/* components/HoverMenu.module.css */
+
+.menu {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+.menuItem {
+    position: relative;
+}
+
+.menuItem a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 7px;
+    display: block;
+}
+
+.menuItem:hover>a {
+    background-color: #444;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #333;
+    list-style: none;
+    padding: 10px 0;
+}
+
+.menuItem:hover .dropdown {
+    display: block;
+}
+
+.dropdown li a {
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown li a:hover {
+    background-color: #555;
+}
