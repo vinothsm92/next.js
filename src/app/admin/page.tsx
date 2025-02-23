@@ -5,6 +5,14 @@ export const metadata = {
 
 import { clerkClient } from "@clerk/nextjs/server";
 import { removeRole, setRole } from "./action";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 
 export default async function Admin() {
   const client = await clerkClient();
@@ -14,38 +22,34 @@ export default async function Admin() {
   const users = (await client.users.getUserList()).data;
 
   return (
-    <>
-      {users.map((user) => {
-        return (
-          <div
-            key={user.id}
-            className={`flex items-center justify-between gap-4 p-4 ${
-              users.indexOf(user) % 2 === 0
-                ? "bg-neutral-50 dark:bg-neutral-800"
-                : "bg-white dark:bg-neutral-900"
-            }`}
-          >
-            <div className="flex gap-8">
-              <div className="dark:text-neutral-200">
-                {user.firstName} {user.lastName}
-              </div>
-
-              <div className="dark:text-neutral-200">
-                {
-                  user.emailAddresses.find(
-                    (email) => email.id === user.primaryEmailAddressId
-                  )?.emailAddress
-                }
-              </div>
-
-              <div className="dark:text-neutral-200">
-                {user.publicMetadata.role as string}
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <form action={setRole} className="inline">
-                <input type="hidden" value={user.id} name="id" />
+<TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell align="right">Email</TableCell>
+            <TableCell align="right">Role</TableCell>
+            <TableCell align="right">Make Admin</TableCell>
+            <TableCell align="right">Make Moderator</TableCell>
+            <TableCell align="right">Remove Role</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {users.map((row) => (
+            <TableRow
+              key={row.firstName}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+              {row.firstName} {row.lastName}
+              </TableCell>
+              <TableCell align="right">{
+                row.emailAddresses.find(
+                  (email) => email.id === row.primaryEmailAddressId
+                )?.emailAddress}</TableCell>
+              <TableCell align="right">{row.publicMetadata.role as string}</TableCell>
+              <TableCell align="right"> <form action={setRole} className="inline">
+                <input type="hidden" value={row.id} name="id" />
                 <input type="hidden" value="admin" name="role" />
                 <button
                   type="submit"
@@ -53,10 +57,9 @@ export default async function Admin() {
                 >
                   Make Admin
                 </button>
-              </form>
-
-              <form action={setRole} className="inline">
-                <input type="hidden" value={user.id} name="id" />
+              </form></TableCell>
+              <TableCell align="right"> <form action={setRole} className="inline">
+                <input type="hidden" value={row.id} name="id" />
                 <input type="hidden" value="moderator" name="role" />
                 <button
                   type="submit"
@@ -64,10 +67,11 @@ export default async function Admin() {
                 >
                   Make Moderator
                 </button>
-              </form>
+              </form></TableCell>
 
+              <TableCell align="right"> 
               <form action={removeRole} className="inline">
-                <input type="hidden" value={user.id} name="id" />
+                <input type="hidden" value={row.id} name="id" />
                 <button
                   type="submit"
                   className="px-2 py-1 text-sm border border-neutral-300 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-700"
@@ -75,10 +79,13 @@ export default async function Admin() {
                   Remove Role
                 </button>
               </form>
-            </div>
-          </div>
-        );
-      })}
-    </>
+                </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
+
   );
 }
