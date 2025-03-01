@@ -8,8 +8,7 @@ const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
   const { userId, redirectToSignIn } = await auth();
-  console.log("response", (await auth()).sessionClaims?.metadata?.role)
-debugger
+
   if (
     isAdminRoute(req) &&
     (await auth()).sessionClaims?.metadata?.role !== "admin"

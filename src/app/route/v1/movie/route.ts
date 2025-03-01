@@ -9,7 +9,7 @@ export async function GET() {
         return Response.json({ data: movies, status: 200})
         
     } catch (error) {
-        console.log(error);
+        console.log("error -> ", error);
     }
 }
 

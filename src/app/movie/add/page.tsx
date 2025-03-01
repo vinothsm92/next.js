@@ -9,7 +9,7 @@ const Page = () => {
     const initialState: FormState = {
         errors: {},
         state: {}
-      };
+    };
 
     const [state, formAction] = useActionState(addMovie, initialState);
 
@@ -19,24 +19,25 @@ const Page = () => {
             <div>
                 <form action={formAction}>
                     <div className='mb-5 mt-5'>
-                        <TextField id="movie-name"  defaultValue={state?.state.movieName} label="Movie Name" variant="outlined" name='movie-name' fullWidth />
+                        <TextField id="movie-name" defaultValue={state?.state.movieName} label="Movie Name" variant="outlined" name='movie-name' fullWidth />
                         {state?.errors.movieName && (
                             <p className="text-red-500">{state.errors.movieName}</p>
                         )}
                     </div>
                     <div className='mb-5'>
-                        <TextField id="poster" label="Movie Image URL" variant="outlined" name='poster' fullWidth />
+                        <TextField id="poster" defaultValue={state?.state.poster} label="Movie Image URL" variant="outlined" name='poster' fullWidth />
                         {state?.errors.poster && (
                             <p className="text-red-500">{state.errors.poster}</p>
                         )}
                     </div>
                     <div className='mb-5'>
-                        <StyledTextField slotProps={{
-                            htmlInput: {
-                                max: 1000,
-                                min: 0
-                            }
-                        }} id="ticket-price" label="Ticket price" type="number" variant="outlined" name='ticket-price' fullWidth />
+                        <StyledTextField
+                            defaultValue={state?.state.ticketPrice} slotProps={{
+                                htmlInput: {
+                                    max: 1000,
+                                    min: 0
+                                }
+                            }} id="ticket-price" label="Ticket price" type="number" variant="outlined" name='ticket-price' fullWidth />
                         {state?.errors.ticketPrice && (
                             <p className="text-red-500">{state.errors.ticketPrice}</p>
                         )}
@@ -46,6 +47,7 @@ const Page = () => {
                             inputProps={{ 'aria-label': 'Switch demo' }}
                             name='is-active'
                             color="secondary"
+                            defaultChecked={state?.state.isActiveValue === 'on'}
                         />
                     </div>
                     {/* Hidden field to ensure the Switch value is included */}

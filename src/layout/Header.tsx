@@ -13,7 +13,6 @@ interface HeaderProps {
 }
 
 const Header = ({ toggleTheme, mode }: HeaderProps) => {
-  console.log('header')
   return (
     <>
       <div className="text-white px-6 flex justify-between items-center">

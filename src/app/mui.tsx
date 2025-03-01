@@ -8,8 +8,7 @@ import theme from '../theme';
 
 
 
-const MUI = ({children}: {children: React.ReactNode}) => {
-  console.log('mui')
+const MUI = ({children}: {children: React.ReactNode}) => {  
      // State to control theme mode
   const [mode, setMode] = useState<'light' | 'dark'>('dark');
 
