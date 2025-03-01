@@ -12,6 +12,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from "@mui/material";
+import TablePaginations from "./tablePagination";
 
 
 export default async function Admin() {
@@ -22,6 +24,7 @@ export default async function Admin() {
   const users = (await client.users.getUserList()).data;
 
   return (
+    <>
 <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -47,37 +50,22 @@ export default async function Admin() {
                 row.emailAddresses.find(
                   (email) => email.id === row.primaryEmailAddressId
                 )?.emailAddress}</TableCell>
-              <TableCell align="right">{row.publicMetadata.role as string}</TableCell>
+              <TableCell align="right">{(row.publicMetadata.role as string)?.toLocaleUpperCase()}</TableCell>
               <TableCell align="right"> <form action={setRole} className="inline">
                 <input type="hidden" value={row.id} name="id" />
                 <input type="hidden" value="admin" name="role" />
-                <button
-                  type="submit"
-                  className="px-2 py-1 text-sm border border-neutral-300 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-700"
-                >
-                  Make Admin
-                </button>
+                <Button type="submit" variant="contained">Make Admin</Button>
               </form></TableCell>
               <TableCell align="right"> <form action={setRole} className="inline">
                 <input type="hidden" value={row.id} name="id" />
                 <input type="hidden" value="moderator" name="role" />
-                <button
-                  type="submit"
-                  className="px-2 py-1 text-sm border border-neutral-300 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-700"
-                >
-                  Make Moderator
-                </button>
+                <Button type="submit" variant="contained">Make Moderator</Button>
               </form></TableCell>
 
               <TableCell align="right"> 
               <form action={removeRole} className="inline">
                 <input type="hidden" value={row.id} name="id" />
-                <button
-                  type="submit"
-                  className="px-2 py-1 text-sm border border-neutral-300 dark:border-neutral-600 dark:text-neutral-200 dark:hover:bg-neutral-700"
-                >
-                  Remove Role
-                </button>
+                <Button type="submit" variant="contained">Remove Role</Button>
               </form>
                 </TableCell>
             </TableRow>
@@ -85,6 +73,8 @@ export default async function Admin() {
         </TableBody>
       </Table>
     </TableContainer>
+    <TablePaginations rows={users.length}/>
+    </>
 
 
   );

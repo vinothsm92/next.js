@@ -31,7 +31,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
- 
+
   return (
     <ClerkProvider>
       <html lang="en">
@@ -39,7 +39,8 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased ${roboto.variable}`}
         >
           <Mui>
-          {children}
+            <div className="w-4/5 mx-auto">
+              {children}</div>
           </Mui>
         </body>
       </html>

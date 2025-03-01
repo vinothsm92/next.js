@@ -4,6 +4,26 @@ export const route = [{
 },{
     path: '/admin',
     name: 'Admin',
+},
+{
+    path: '/movie',
+    name: 'Movie',
+    children: [{
+        path: '/movie/add',
+        name: 'Add Movies',
+        meta: {
+            title: 'Add Movies',
+            icon: 'movie'
+        }
+    },
+    {
+        path: '/movie/movies-list',
+        name: 'Movies List',
+        meta: {
+            title: 'Movies list',
+            icon: 'movieList'
+        }
+    }]
 },{
     path: '/user',
     name: 'User',
